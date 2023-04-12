@@ -1,5 +1,7 @@
-import { Scene, Engine } from "@babylonjs/core";
+import { Engine } from "@babylonjs/core/Engines/engine";
+import { Scene } from "@babylonjs/core/scene";
 import type { CustomSceneOptions } from "./types";
+import { Camera } from "@babylonjs/core/Cameras/camera";
 
 const defaultOptions: CustomSceneOptions = {
   debug: false,
@@ -35,7 +37,7 @@ export abstract class BaseScene {
 
     // show devtools
     if (this.options.debug) {
-      this.scene.debugLayer.show();
+      this.scene.debugLayer.show({ enableClose: true, overlay: true });
     } else {
       this.scene.debugLayer.hide();
     }
@@ -58,6 +60,8 @@ export abstract class BaseScene {
    * It is called just after the scene is created.
    */
   createEnvironment: () => void | Promise<void> = () => {};
+
+  abstract createCamera: (scene: Scene) => Camera;
 
   /**
    * @description This method contains the rendering logic for the scene and can be overriden if needed

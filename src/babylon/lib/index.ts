@@ -1,3 +1,4 @@
+import "@babylonjs/core";
 import "@babylonjs/loaders/glTF";
 
 export { BaseScene } from "./base-scene";
