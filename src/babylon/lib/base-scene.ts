@@ -31,9 +31,9 @@ export abstract class BaseScene {
   public async initialize() {
     this.engine.displayLoadingUI();
     // ===================================
-    this.scene = await this.createScene();
+    this.scene = await this.createScene(this.engine);
 
-    await this.createEnvironment();
+    await this.createEnvironment(this.scene);
 
     // show devtools
     if (this.options.debug) {
@@ -53,13 +53,13 @@ export abstract class BaseScene {
    * @param engine
    * @description Create the scene with or without the additional items in this function
    */
-  abstract createScene: (engine?: Engine) => Scene | Promise<Scene>;
+  abstract createScene: (engine: Engine) => Scene | Promise<Scene>;
 
   /**
    * @description Create the environment for the scene in this method.
    * It is called just after the scene is created.
    */
-  createEnvironment: () => void | Promise<void> = () => {};
+  createEnvironment: (scene: Scene) => void | Promise<void> = () => {};
 
   abstract createCamera: (scene: Scene) => Camera;
 
