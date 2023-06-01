@@ -4,3 +4,5 @@ export type CustomSceneOptions = {
   debug: boolean;
   customLoadingScreen?: ILoadingScreen;
 };
+
+export type MayBePromise<T> = T | Promise<T>;

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useEffectAsync } from "./hooks/useEffectAsync";
-import { BasicScene } from "./babylon/scenes/basic-scene";
+import { BasicSceneController } from "./babylon/scenes/basic-scene-controller";
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,7 +11,7 @@ function App() {
     }
 
     // create scene object
-    const scene = new BasicScene(canvasRef.current, { debug: true });
+    const scene = new BasicSceneController(canvasRef.current, { debug: true });
 
     // initialize scene
     await scene.initialize();

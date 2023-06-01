@@ -1,7 +1,7 @@
-import "@babylonjs/inspector";
 import "@babylonjs/core";
+import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
 
-export { BaseScene } from "./base-scene";
+export { SceneController } from "./scene-controller";
 export { LoadingScreen } from "./loading-screen";
 export { type CustomSceneOptions } from "./types";

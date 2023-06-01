@@ -1,19 +1,20 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
-import type { CustomSceneOptions } from "./types";
+import type { CustomSceneOptions, MayBePromise } from "./types";
 import { Camera } from "@babylonjs/core/Cameras/camera";
+import { resolveValue } from "./utils";
 
 const defaultOptions: CustomSceneOptions = {
   debug: false,
 };
 
-export abstract class BaseScene {
+export abstract class SceneController {
   protected engine: Engine;
   protected scene?: Scene;
   protected options: CustomSceneOptions;
 
   constructor(canvas: HTMLCanvasElement, options = defaultOptions) {
-    this.engine = new Engine(canvas);
+    this.engine = new Engine(canvas, true);
     this.options = options;
 
     if (options.customLoadingScreen) {
@@ -31,9 +32,10 @@ export abstract class BaseScene {
   public async initialize() {
     this.engine.displayLoadingUI();
     // ===================================
-    this.scene = await this.createScene(this.engine);
 
-    await this.createEnvironment(this.scene);
+    this.scene = await resolveValue(this.createScene(this.engine));
+
+    await resolveValue(this.createEnvironment(this.scene));
 
     // show devtools
     if (this.options.debug) {
@@ -53,13 +55,13 @@ export abstract class BaseScene {
    * @param engine
    * @description Create the scene with or without the additional items in this function
    */
-  abstract createScene: (engine: Engine) => Scene | Promise<Scene>;
+  abstract createScene: (engine: Engine) => MayBePromise<Scene>;
 
   /**
    * @description Create the environment for the scene in this method.
    * It is called just after the scene is created.
    */
-  createEnvironment: (scene: Scene) => void | Promise<void> = () => {};
+  createEnvironment: (scene: Scene) => MayBePromise<void> = () => {};
 
   abstract createCamera: (scene: Scene) => Camera;
 

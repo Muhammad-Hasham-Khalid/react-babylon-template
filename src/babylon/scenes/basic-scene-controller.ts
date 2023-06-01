@@ -2,9 +2,9 @@ import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Scene } from "@babylonjs/core/scene";
-import { BaseScene } from "../lib";
+import { SceneController } from "../lib";
 
-export class BasicScene extends BaseScene {
+export class BasicSceneController extends SceneController {
   camera?: FreeCamera;
 
   createScene = (engine: Engine) => {

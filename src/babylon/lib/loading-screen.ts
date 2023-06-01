@@ -1,13 +1,14 @@
 import { ILoadingScreen } from "@babylonjs/core/Loading/loadingScreen";
+import { MayBePromise } from "./types";
 
 type LoaderApi = {
-  show: () => void | Promise<void>;
-  hide: () => void | Promise<void>;
+  show: () => MayBePromise<void>;
+  hide: () => MayBePromise<void>;
 };
 
 type Options = {
-  backgroundColor?: string;
-  text?: string;
+  backgroundColor: string;
+  text: string;
   loaderApi: LoaderApi;
 };
 
@@ -15,8 +16,8 @@ const defaultOptions = {
   backgroundColor: "#f0f0f0",
   text: "LOADING",
   loaderApi: {
-    show: () => {},
-    hide: () => {},
+    show() {},
+    hide() {},
   },
 } satisfies Options;
 
@@ -25,18 +26,18 @@ export class LoadingScreen implements ILoadingScreen {
   loadingUIText: string;
   loader: LoaderApi;
 
-  constructor(options: Options) {
+  constructor(options: Partial<Options>) {
     this.loadingUIBackgroundColor =
-      options.backgroundColor || defaultOptions.backgroundColor;
-    this.loadingUIText = options.text || defaultOptions.text;
-    this.loader = options.loaderApi || defaultOptions.loaderApi;
+      options.backgroundColor ?? defaultOptions.backgroundColor;
+    this.loadingUIText = options.text ?? defaultOptions.text;
+    this.loader = options.loaderApi ?? defaultOptions.loaderApi;
   }
 
-  displayLoadingUI = () => {
+  displayLoadingUI() {
     this.loader.show();
-  };
+  }
 
-  hideLoadingUI = () => {
+  hideLoadingUI() {
     this.loader.hide();
-  };
+  }
 }
